@@ -1,5 +1,18 @@
-script: bash ./update.sh
+script:
+  - git config --global user.name "Jenkinsmeta CI"
+  - git config --global user.email "mkasprzyk@szy.fr"
+  - git clone https://github.com/jenkinsmeta/jenkinsmeta-docker.git
+  - cd jenkinsmeta-docker
+  - #Update submodules...
+  - git submodule init
+  - git submodule update
+  - git submodule foreach git pull origin master
+  - #Commit changes
+  - git commit -am 'Update submodules'
+  - #Push them all!
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master > /dev/null 2>&1
+
 env:
   global:
   - GH_REF: github.com/jenkinsmeta/jenkinsmeta-docker.git
-  - secure: SwPxz7vA/6nnQpwnOtw92cB/GIZm0VHFY/900GHhiXKsxNd3zOx2YuBkrBJWYS3C3Esg+iyL6ILiQdjM+gW16Ka8eltEpiTOALXTzYhG7OOVnk0u7ht1K9XB5cSbUQVQKFzgYREQXpDeeOU2pQuVqnjrTt0ycfLtQpI1VPXE729XBhDHHnk3ALQAsNasafw2bv5N3v/CzcL3IQ/Sut/Vuu5scWblk6eTtDjdY3utT8By7kKz8KBoXcwDr5+we9/SuK3kSQfdrtyEP8JDNGyt0LiAed9fXAvoEkx2tdFcL2Y/BX3oFpc0WTwG1elPwi8O6Ya2PH0rcFYQFM9e/iv6vbfWSf0u9wa5RvdEnr5XeZxS//Tg5At8LtHEUptslLVtiPRIb+BOD23vdX5OAP7p3PBfe8cv0HVvIwwSH4KVsW8Xsz7tl2tH2yfG4si0GjsciSogTeW5BkEIwGjGG1FQ2Eu+pKydCAWqRmTrPo2+nX+IQis7nK3X2klEPreorn1S5TE2NczRUqyDmAyd1s7JUvMcqnUzpYJkflgKN5iUgAn0bHp+E1+tJeKZHwJwEgkrSPmO3S2xDcu5wJXh5pOmBbRKz4fpp7+l+lHjsFa+7ODa5kLLH4kpVIebvCxCm4kzJiPQKT8pXgr7uRrZGAauwzNlqDsFAM9aoy/Qhp3xzMQ=
+  - secure: kSIY9kLaY25UkUrvvy85Ui4d0fuaaGn6k9ykiNwK9RJrDldrOowUsZsRtTJsT9VfxUTkGYi60JDZw7JW+4W8zVx7XjoA10yXLMqGum7nUR8b2Qry5PJtpf3KCq6bybrXeNx8Ts4EW4z+W7dJ+mvzFbb7/ZoLbfO+oLh+sD1UiyincWaG0GkAbG3kCSvIwjhmblIaU7ZxGcMiHRskruBfRk647p5+jrKkZglOAALNKqFN9Ll7m7HyAJqMPlcTtQoEM2wJgWPf/E8qv0Y+2SOMqGFe5G9MHCwFEzGaCEanhrJgGUnZ4O1pJ66CRK1oOpBU+NAQVWx9Ur24aqQRIl+f7uRbmWFwc5CoMx7m2TzpQPA4TCf0EFXuUSX5G7Kyjm01uPl0EL2K8KT7GdcrEdx61QA/ixvoP/ZguM50rMCrZn7zqEsbosazUqb4JSaAsabdeUVBGQz4HpdvaBS/C0mRm5JdC72p9m07of7CXcbVl48xJ2p2s7R2PKzPi1GyqUO1zkFsuW5pB6BHF8bt0rak+3ulLm7rwktCyw1ZIdDiuAhnIzSGeun/mlwk3bXobDSG5pQ611L7+8Df/8vzp1KC5pNMyuaa0RSBBxq3STFjfjYk74dOZlJ9GICa0uTIqD/PGJzPJJ0WoxVY3NijvBHRnEJOymH06Hi5qbKCHQaz1EA=
