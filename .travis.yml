@@ -1,18 +1,18 @@
 script:
-  - git config --global user.name "Jenkinsmeta CI"
-  - git config --global user.email "mkasprzyk@szy.fr"
-  - git clone https://github.com/jenkinsmeta/jenkinsmeta-docker.git
-  - cd jenkinsmeta-docker
-  - #Update submodules...
-  - git submodule init
-  - git submodule update
-  - git submodule foreach git pull origin master
-  - #Commit changes
-  - git commit -am 'Update submodules'
-  - #Push them all!
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master > /dev/null 2>&1
-
+- git config --global user.name "Jenkinsmeta CI"
+- git config --global user.email "mkasprzyk@szy.fr"
+- git clone https://github.com/jenkinsmeta/jenkinsmeta-docker.git
+- cd jenkinsmeta-docker
+- 
+- git submodule init
+- git submodule update
+- git submodule foreach git pull origin master
+- 
+- git commit -am 'Update submodules'
+- 
+- git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master > /dev/null
+  2>&1
 env:
   global:
   - GH_REF: github.com/jenkinsmeta/jenkinsmeta-docker.git
-  - secure: kSIY9kLaY25UkUrvvy85Ui4d0fuaaGn6k9ykiNwK9RJrDldrOowUsZsRtTJsT9VfxUTkGYi60JDZw7JW+4W8zVx7XjoA10yXLMqGum7nUR8b2Qry5PJtpf3KCq6bybrXeNx8Ts4EW4z+W7dJ+mvzFbb7/ZoLbfO+oLh+sD1UiyincWaG0GkAbG3kCSvIwjhmblIaU7ZxGcMiHRskruBfRk647p5+jrKkZglOAALNKqFN9Ll7m7HyAJqMPlcTtQoEM2wJgWPf/E8qv0Y+2SOMqGFe5G9MHCwFEzGaCEanhrJgGUnZ4O1pJ66CRK1oOpBU+NAQVWx9Ur24aqQRIl+f7uRbmWFwc5CoMx7m2TzpQPA4TCf0EFXuUSX5G7Kyjm01uPl0EL2K8KT7GdcrEdx61QA/ixvoP/ZguM50rMCrZn7zqEsbosazUqb4JSaAsabdeUVBGQz4HpdvaBS/C0mRm5JdC72p9m07of7CXcbVl48xJ2p2s7R2PKzPi1GyqUO1zkFsuW5pB6BHF8bt0rak+3ulLm7rwktCyw1ZIdDiuAhnIzSGeun/mlwk3bXobDSG5pQ611L7+8Df/8vzp1KC5pNMyuaa0RSBBxq3STFjfjYk74dOZlJ9GICa0uTIqD/PGJzPJJ0WoxVY3NijvBHRnEJOymH06Hi5qbKCHQaz1EA=
+  - secure: B4AvmBXkCLDbChMAF8/L5CxX/BGBu2y54vOkYrCF8QfUeHVB7gNxsLlOtnsN8UL+CQ0g/1uqtX6ilr9yvQ9uuBbtGtjYAv6+JbcWwG3O/aW/ZVnDyyXF5v7sBnZOzQxu3fFeu36PGR5IvwmEkURmhRQGiJM+AK155cx+1tYvto74oWBIQSpaqOI2n3mxecF7g4xNC/Mvuoo2TtD63C0LtymVkjMTY9PplY8EQdNAFsBE2R4/SMxt5necW6OHcsoMX1FhkcxKEJ24mIP72sJ0yA4SsFBzpWBQm+/DZUzmTnCwILmFR1ggxFbPBYiDflo3me+Wt5uH8qUECmVp+Bhy7Ud/2CuhA1XWr8C7sB6rnaSsFr8wEEEfXaydBrLj6d6QY2skCfuPdYpy53HNm8brmvd85YnI0xX4R8ibFSSQDIxIFMWNjughccA37oO/jIojZ6lITKCdKzWMSb+9cB7fLD9jKO+QA+Q0ptzNpgmTf1Qm+4RcSSCCfuM5gm1ereOGMSvmoaLuqqUt6UWk4WoudlTPq8+90jTLO3ucX1v0bgqwymcOSD8R5oG/MZ8dVr9h9oWGinDKlZbueNaKumrsrrQWTkplKOJf6QTp4a1wLAeE1OZInaeqyTNQ4axlBhbSuoBmV/OLi4RPlV/56NdY0/gWZj247gOyBO3tKVGBoSY=
