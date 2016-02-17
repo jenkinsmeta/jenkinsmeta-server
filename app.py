@@ -1,30 +1,34 @@
-from flask_restful import Resource, Api
-from flask import Flask
+from flask import Flask, request, abort
+from cache import Cache
 import requests
-import io
+import settings
 import redis
-from jenkinsmeta_pb2 import computers_pb2, queue_pb2, views_pb2, view_pb2
+
 
 app = Flask(__name__)
-api = Api(app)
+cache = Cache(app)
 
 
-class Computers(Resource):
-    def get(self):
-        r = redis.StrictRedis(host='localhost', port=6379, db=0)
-        self.host = 'localhost:5000'
-        comp = computers_pb2.Computers()
-        payload = r.get('computers')
-        if not payload:
-            payload = requests.get('http://'+self.host+'/computers').content
-            r.setex('computers', 5, payload)
-        comp.ParseFromString(payload)
-        return r.get('computers')
+@app.route('/hosts', methods=['POST', 'GET', 'DELETE'])
+def hosts():
+    url = request.form.get('url')
+    hosts_key = 'hosts'
+    if request.method == 'GET':
+        return str(request.cache.lrange(hosts_key, 0, -1))
+    if request.method == 'POST':
+        if not url: abort(400)
+        request.cache.lrem(hosts_key, 0, url)
+        request.cache.rpush(hosts_key, url)
+    if request.method == 'DELETE':
+        if not url: abort(400)
+        request.cache.lrem(hosts_key, 0, url)
+    return request.method
 
+@app.route('/<path:path>')
+def proxy(path):
+    return str('Requested path: {}'.format(path))
 
-
-api.add_resource(Computers, '/computers')
 
 if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
 
